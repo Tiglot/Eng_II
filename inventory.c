@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <readline.h>
+#include <ctype.h>
+
 
 #define NAME_LEN 25
 #define MAX_PARTS 100
@@ -15,10 +15,11 @@ struct part
 int num_parts = 0;
 
 int find_parts(int number);
-void insert ();
-void search ();
-void update ();
-void print ();
+void insert();
+void search();
+void update();
+void print();
+int read_line(char str[], int n);
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +28,7 @@ int main(int argc, char *argv[])
     {
         printf("Enter operation code: ");
         scanf("%c", &code);
-        while (getchar () != \n); 
+        while (getchar () != '\n'); 
         switch (code) 
         {
             case 'i':
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
                 search ();
                 break;
             case 'u':
-                upadte ();
+                update ();
                 break;
             case 'p':
                 print ();
@@ -47,7 +48,7 @@ int main(int argc, char *argv[])
             default:
                 printf("Illegal code\n");
         }
-        printf("\n")
+        printf("\n");
     }
 }
 
@@ -77,7 +78,7 @@ void insert()
     }
     inventory[num_parts].number = part_number;
     printf("enter part name: ");
-    read_line(inventory[num_parts].number, NAME_LEN);
+    read_line(inventory[num_parts].name, NAME_LEN);
     printf("Enter quantity on hand: ");
     scanf("%d", &inventory[num_parts].on_hand);
     num_parts ++;
@@ -93,7 +94,7 @@ void search()
 
     if ( i >= 0)
     {
-        printf("Part number: %s\n", inventory[i].name);
+        printf("Part name: %s\n", inventory[i].name);
         printf("Quantity on hand: %d\n", inventory[i].on_hand);
     }
     else
@@ -107,11 +108,11 @@ void update()
     printf("Enter part number: ");
     scanf("%d", &number);
 
-    i = find_parts(number)
+    i = find_parts(number);
     if( i >= 0)
     {
         printf("Enter quantity on hand: ");
-        scanf("%d", &change)
+        scanf("%d", &change);
         inventory[i].on_hand += change;
     }
     else
@@ -123,5 +124,20 @@ void print()
     int i;
     printf("Part number   Part name   Quantity on hand\n");
     for( i = 0; i < num_parts; i++)
-        printf("%7d       %-25s%11d\n", inventory[i].number, inventory[i].name, inventory[i].on_hand);
+        printf("%7d          %-25s%11d\n", inventory[i].number, inventory[i].name, inventory[i].on_hand);
+}
+
+int read_line(char str[], int n)
+{
+    int ch, i = 0;
+    while (isspace(ch = getchar()))
+        ;
+    while (ch != '\n' && ch != EOF)
+    {
+        if (i < n)
+            str[i++] = ch;
+        ch = getchar();
+    }
+    str[i] = '\0';
+    return i;
 }
