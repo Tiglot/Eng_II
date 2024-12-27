@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     char code;
     for(;;)
     {
+    // still have to fix error after operation
         printf("Enter operation code: ");
         scanf("%c", &code);
         while (getchar () != '\n'); 
