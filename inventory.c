@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <ctype.h>
-
+//still have to fix header
+//add delete function that uses pointers
 
 #define NAME_LEN 25
 #define MAX_PARTS 100
